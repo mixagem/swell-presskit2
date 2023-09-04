@@ -16,6 +16,12 @@
 //     font-display: swap;
 // }
 
+:root {
+    --blackbar-content: 140px;
+    --blackbar-margin: 40px;
+    --section-with-blackbar: calc(var(--blackbar-content) + var(--blackbar-margin) + 100vh);
+}
+
 *,
 html {
     margin: 0;
@@ -28,7 +34,6 @@ body {
     font-weight: 500;
     font-style: normal;
     max-width: 100vw;
-    max-height: calc(150vh + 140px + 100vh + 140px + 100vh);
     color: white;
     background-color: black;
 }
@@ -38,123 +43,133 @@ body {
 }
 
 .invisible {
-    opacity: 0;
-    vertical-align: bottom;
+    opacity: 0 !important;
 }
 
-div.black-band{
-    height: 100px;
-    background-image: url('assets/swell-afrika.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    margin:20px 0;
-}
+@keyframes scaleDown {
 
-@keyframes zoomingOutText {
-    from {
-        font-size: 1rem;
+    0% ,50% {
+        transform: translate(0);
     }
-    to {
-        font-size: 0.5rem;
+
+    100% {
+        transform: scale(0.5) translate(-50%);
     }
 }
 
-
-@keyframes faddingInText {
-    from {
-        opacity: 0;
+@keyframes scaleUp {
+    100% {
+        transform: scale(2) translate(50%);
     }
-    to {
+}
+
+@keyframes fadeIn {
+    100% {
         opacity: 1;
     }
 }
 
 section {
+    // defaults
+    height: 100vh;
+
+    // video-backgrounds
     div.video-bg {
         position: sticky;
         width: 100%;
         height: 100%;
         overflow: hidden;
-        z-index: -2;
+        z-index: -9;
 
         video {
+            position: absolute;
+            top: 50%;
             left: 50%;
             min-height: 100%;
             min-width: 100%;
-            position: absolute;
-            top: 50%;
             transform: translateX(-50%) translateY(-50%);
         }
     }
 
-    &#first {
-        height: 150vh;
-        // video color-overlay -v
-        background-color: rgba(160, 244, 255, 0.197);
-
-        div.section-content {
-            position: relative;
-            top: -50vh;
-
-            p {
-                opacity: 0;
-            }
-
-            &.zoomed-out {
-                h1 {
-                    animation: zoomingOutText 1s forwards !important;
-                }
-                p{
-                    animation: faddingInText 1s forwards !important;
-                }
-            }
-        }
+    // content-wrappers
+    div.content-wrapper {
+        height: 100%;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
-    &#second {
-        height: 100vh;
-        // video color-overlay -v
-        background-color: rgba(255, 127, 153, 0.197);
-
-        div.section-content {
-            position: relative;
-            top: -50vh;
-
-            p {
-                opacity: 0;
-            }
-
-            &.zoomed-out {
-                h1 {
-                    animation: zoomingOutText 1s forwards !important;
-                }
-                p{
-                    animation: faddingInText 1s forwards !important;
-                }
-            }
-        }
+    &#origins > div.content-wrapper {
+        top: var(--section-with-blackbar);
     }
-    &#third {
-        height: 100vh;
-        // video color-overlay -v
-        background-color: rgba(195, 127, 255, 0.197);
-
-        div.section-content {
-            position: relative;
-            top: -50vh;
-
-            p {
-                opacity: 0;
-            }
-
-            &.zoomed-out {
-                h1 {
-                    animation: zoomingOutText 1s forwards !important;
-                }
-                p{
-                    animation: faddingInText 1s forwards !important;
-                }
-            }
-        }
+    &#debuts > div.content-wrapper {
+        top: calc(2 * var(--section-with-blackbar));
     }
+    &#history > div.content-wrapper {
+        top: calc(3 * var(--section-with-blackbar));
+    }
+
+    // landing section
+    &#landing {
+        // background color here works as a video overlay
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    // origins section
+    &#origins {
+        // background color here works as a video overlay
+        background-color: rgba(76, 41, 0, 0.55);
+
+        > div.content-wrapper {
+            justify-content: space-evenly;
+            padding-left: 5vw;
+
+            p:first-of-type{
+
+                + p{
+                    opacity: 0;
+                }
+                //elemento logo seguinte
+                &.scale-down + p{
+                    animation: fadeIn 1s forwards;
+                }
+                
+            }
+            
+        }
+
+    }
+}
+
+div.blackbar {
+    height: var(--blackbar-content);
+    background-image: url("assets/swell-afrika.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    margin: calc(var(--blackbar-margin) / 2) 0;
+}
+
+// debug
+.red {
+    color: red;
+}
+
+.blue {
+    color: blue;
+}
+
+.green {
+    color: green;
+}
+
+.fade-in {
+    animation: fadeIn 1s forwards;
+}
+
+.scale-up {
+    animation: scaleUp 1s forwards;
+}
+.scale-down {
+    animation: scaleDown .75s forwards;
 }
