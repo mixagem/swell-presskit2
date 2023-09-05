@@ -182,10 +182,6 @@ section#landing > div.content-wrapper > div#mobile-animation .cursor {
   opacity: 0;
   width: 22px;
   height: 25px;
-  background-image: url("assets/img/cursor.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
   position: relative;
   top: 50px;
   left: 20px;
@@ -391,20 +387,12 @@ section#embeds > div.content-wrapper {
   width: calc(80vw - 1.2rem);
 }
 section#embeds > div.content-wrapper > iframe {
-  background: black;
   height: 70vh;
   width: 39.375vh;
   border-radius: 15px;
   border: solid 0.5rem black;
   margin: 0 0.2rem;
-}
-section#embeds > div.content-wrapper > iframe:nth-of-type(2) {
-  background: red;
-  border-color: red;
-}
-section#embeds > div.content-wrapper > iframe:nth-of-type(3) {
-  background: blue;
-  border-color: blue;
+  border-color: rgba(97, 68, 51, 0.6) rgba(97, 68, 51, 0.6) rgba(0, 144, 160, 0.4) rgba(0, 144, 160, 0.4);
 }
 section#embeds:not(.reverse).first-fx iframe {
   opacity: 0;

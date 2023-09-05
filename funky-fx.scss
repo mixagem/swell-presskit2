@@ -47,6 +47,7 @@
         -webkit-transform: scale(0.5) translate(50%);
     }
 }
+
 @-webkit-keyframes scaleDownRight {
     0% {
         transform: translate(0);
@@ -111,6 +112,7 @@
         opacity: 1;
     }
 }
+
 @-webkit-keyframes fadeInRight {
     0% {
         opacity: 0;

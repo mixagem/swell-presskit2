@@ -205,10 +205,10 @@ section {
                     opacity: 0;
                     width: 22px;
                     height: 25px;
-                    background-image: url("assets/img/cursor.png");
-                    background-size: contain;
-                    background-repeat: no-repeat;
-                    background-position: center;
+                    // background-image: url("assets/img/cursor.png");
+                    // background-size: contain;
+                    // background-repeat: no-repeat;
+                    // background-position: center;
                     position: relative;
                     top: 50px;
                     left: 20px;
@@ -486,22 +486,13 @@ section {
             width: calc(100vw - 20vw - (2 * 3 * 0.2rem));
 
             > iframe {
-                background: black;
+                // background: black;
                 height: 70vh;
                 width: calc(70vh * 9 / 16);
                 border-radius: 15px;
                 border: solid 0.5rem black;
                 margin: 0 0.2rem;
-
-                &:nth-of-type(2) {
-                    background: red;
-                    border-color: red;
-                }
-
-                &:nth-of-type(3) {
-                    background: blue;
-                    border-color: blue;
-                }
+                border-color: rgba(97, 68, 51, 0.6) rgba(97, 68, 51, 0.6) rgba(0, 144, 160, 0.4) rgba(0, 144, 160, 0.4);
             }
         }
 
