@@ -1,25 +1,28 @@
-// @font-face {
-//     font-family: 'ITC Avant Garde Gothic Std Medium Condensed';
-//     src: url('assets/ITCAvantGardeStd-MdCn.woff2') format('woff2'),
-//         url('assets/ITCAvantGardeStd-MdCn.woff') format('woff');
-//     font-weight: 500;
-//     font-style: normal;
-//     font-display: swap;
-// }
+@import "funky-fx.css";
 
-// @font-face {
-//     font-family: 'ITC Avant Garde Std Md';
-//     src: url('assets/ITCAvantGardeStd-Md.woff2') format('woff2'),
-//         url('assets/ITCAvantGardeStd-Md.woff') format('woff');
-//     font-weight: 500;
-//     font-style: normal;
-//     font-display: swap;
-// }
+@font-face {
+    font-family: "ITC Avant Garde Gothic Std Medium Condensed";
+    src: url("assets/fonts/ITCAvantGardeStd-MdCn.woff2") format("woff2"),
+        url("assets/fonts/ITCAvantGardeStd-MdCn.woff") format("woff");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "ITC Avant Garde Std Md";
+    src: url("assets/fonts/ITCAvantGardeStd-Md.woff2") format("woff2"),
+        url("assets/fonts/ITCAvantGardeStd-Md.woff") format("woff");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
 
 :root {
     --blackbar-content: 140px;
     --blackbar-margin: 40px;
     --section-with-blackbar: calc(var(--blackbar-content) + var(--blackbar-margin) + 100vh);
+    --history-animation-delay-base: 0.15;
 }
 
 *,
@@ -36,6 +39,17 @@ body {
     max-width: 100vw;
     color: white;
     background-color: black;
+    overflow-x: hidden;
+    letter-spacing: 0.5px;
+}
+
+ul {
+    list-style-type: "";
+}
+
+a {
+    color: white;
+    text-decoration: none;
 }
 
 .hidden {
@@ -46,35 +60,22 @@ body {
     opacity: 0 !important;
 }
 
-@keyframes scaleDown {
-
-    0% ,50% {
-        transform: translate(0);
-    }
-
-    100% {
-        transform: scale(0.5) translate(-50%);
-    }
-}
-
-@keyframes scaleUp {
-    100% {
-        transform: scale(2) translate(50%);
-    }
-}
-
-@keyframes fadeIn {
-    100% {
-        opacity: 1;
-    }
-}
-
 section {
-    // defaults
     height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+
+    // blackbars
+    + div.blackbar {
+        height: var(--blackbar-content);
+        background-image: url("assets/img/swell-afrika.png");
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        margin: calc(var(--blackbar-margin) / 2) 0;
+    }
 
     // video-backgrounds
-    div.video-bg {
+    > div.video-bg {
         position: sticky;
         width: 100%;
         height: 100%;
@@ -91,13 +92,32 @@ section {
         }
     }
 
-    // content-wrappers
-    div.content-wrapper {
+    // section overlays
+    > div.overlay-plane {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        top: -100%;
+    }
+
+    // section content wrappers (absolute positioning)
+    > div.content-wrapper {
         height: 100%;
         position: absolute;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-evenly;
+        padding: 0 10vw 5vh;
+        width: 80vw;
+        height: 95vh;
+
+        p {
+            font-size: 1.5rem;
+            line-height: 1.2;
+        }
+    }
+    &#landing > div.content-wrapper {
+        top: 0;
     }
     &#origins > div.content-wrapper {
         top: var(--section-with-blackbar);
@@ -108,68 +128,420 @@ section {
     &#history > div.content-wrapper {
         top: calc(3 * var(--section-with-blackbar));
     }
+    &#embeds > div.content-wrapper {
+        top: calc(4 * var(--section-with-blackbar));
+    }
 
     // landing section
     &#landing {
         // background color here works as a video overlay
         background-color: rgba(0, 0, 0, 0.4);
+
+        // socials (absolute positioning)
+        > div.header-socials {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 1s both;
+            -webkit-animation: fadeIn 1s both;
+            animation-delay: 1s;
+            -webkit-animation-delay: 1s;
+            z-index: 2;
+            padding: 1.5rem;
+
+            > a > i {
+                font-size: 30px;
+                margin: 0 0.5rem;
+                cursor: pointer;
+            }
+        }
+
+        > div.content-wrapper {
+            align-items: center;
+            justify-content: center;
+
+            > p#swell-title {
+                width: 100%;
+                text-align: center;
+                animation: fadeIn 1s both;
+                -webkit-animation: fadeIn 1s both;
+            }
+
+            > p#swell-title > img {
+                max-width: 100%;
+            }
+
+            > p#swell-subtitle {
+                font-size: 2rem;
+                font-family: "ITC Avant Garde Std Md";
+                font-weight: 500;
+                font-style: normal;
+                text-transform: uppercase;
+                text-shadow: 1px 6px 6px black;
+                text-align: center;
+                animation: fadeIn 1s both;
+                -webkit-animation: fadeIn 1s both;
+                animation-delay: 1s;
+                -webkit-animation-delay: 1s;
+            }
+
+            > div#mobile-animation {
+                width: 51px;
+                height: 92px;
+                background-image: url("assets/img/mobile.png");
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+                margin-top: 10vh;
+                animation: fadeIn 1s both;
+                -webkit-animation: fadeIn 1s both;
+                animation-delay: 1s;
+                -webkit-animation-delay: 1s;
+
+                .cursor {
+                    opacity: 0;
+                    width: 22px;
+                    height: 25px;
+                    background-image: url("assets/img/cursor.png");
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    position: relative;
+                    top: 50px;
+                    left: 20px;
+                    animation-duration: 3s;
+                    -webkit-animation-duration: 3s;
+                    animation-iteration-count: infinite;
+                    -webkit-animation-iteration-count: infinite;
+                    animation-name: mobileSwipe;
+                    -webkit-animation-name: mobileSwipe;
+
+                    &:after {
+                        position: relative;
+                        content: "_";
+                        color: transparent;
+                        display: inline-block;
+                        width: 8px;
+                        height: 8px;
+                        background: rgba(255, 165, 0, 0.7);
+                        margin-left: 40%;
+                        top: -4px;
+                        left: -8px;
+                        border-radius: 50%;
+                    }
+                }
+            }
+
+            > div#desktop-animation {
+                position: relative;
+                width: 40px;
+                height: 80px;
+                box-shadow: inset 0 0 0 2px #fff;
+                border-radius: 25px;
+                margin-top: 10vh;
+                animation: fadeIn 1s both;
+                -webkit-animation: fadeIn 1s both;
+                animation-delay: 1s;
+                -webkit-animation-delay: 1s;
+
+                &:before {
+                    opacity: 0;
+                    position: relative;
+                    content: "_";
+                    color: transparent;
+                    display: inline-block;
+                    width: 8px;
+                    height: 8px;
+                    background: rgba(255, 165, 0, 0.7);
+                    margin-left: 40%;
+                    top: 10px;
+                    border-radius: 50%;
+                    animation-duration: 3.6s;
+                    -webkit-animation-duration: 3.6s;
+                    animation-iteration-count: infinite;
+                    -webkit-animation-iteration-count: infinite;
+                    animation-name: mouseScroll;
+                    -webkit-animation-name: mouseScroll;
+                }
+            }
+        }
     }
 
     // origins section
     &#origins {
-        // background color here works as a video overlay
-        background-color: rgba(76, 41, 0, 0.55);
+        > div.overlay-plane {
+            text-align: right;
 
-        > div.content-wrapper {
-            justify-content: space-evenly;
-            padding-left: 5vw;
-
-            p:first-of-type{
-
-                + p{
-                    opacity: 0;
-                }
-                //elemento logo seguinte
-                &.scale-down + p{
-                    animation: fadeIn 1s forwards;
-                }
-                
+            > img {
+                min-width: 103px;
+                min-height: 31px;
+                width: 25vw;
+                margin: 28vh 12vw;
             }
-            
         }
 
+        // funky-fx
+        &:not(.reverse) {
+            &.first-fx {
+                p,
+                img {
+                    opacity: 0;
+                }
+            }
+
+            &.second-fx {
+                p:nth-of-type(1) {
+                    animation: fadeIn 1s both;
+                    -webkit-animation: fadeIn 1s both;
+                }
+
+                p:nth-of-type(2),
+                img {
+                    opacity: 0;
+                }
+            }
+        }
+        &.third-fx,
+        &.reverse {
+            p:nth-of-type(1) {
+                animation: scaleDownLeft 1s both;
+                -webkit-animation: scaleDownLeft 1s both;
+            }
+
+            p:nth-of-type(2),
+            img {
+                opacity: 0;
+                animation: fadeIn 1s both;
+                -webkit-animation: fadeIn 1s both;
+                animation-delay: 0.5s;
+                -webkit-animation-delay: 0.5s;
+            }
+            img {
+                animation-delay: 1s;
+                -webkit-animation-delay: 1s;
+            }
+        }
+    }
+
+    // origins section
+    &#debuts {
+        // funky-fx
+        &:not(.reverse) {
+            &.first-fx {
+                p {
+                    opacity: 0;
+                }
+            }
+
+            &.second-fx {
+                p:nth-of-type(1) {
+                    animation: fadeIn 1s both;
+                    -webkit-animation: fadeIn 1s both;
+                }
+
+                p:nth-of-type(2),
+                p:nth-of-type(3) {
+                    opacity: 0;
+                }
+            }
+
+            &.third-fx {
+                p:nth-of-type(1) {
+                    animation: scaleDown 1s both;
+                    -webkit-animation: scaleDown 1s both;
+                }
+
+                p:nth-of-type(2) {
+                    opacity: 0;
+                    animation: fadeIn 1s both;
+                    -webkit-animation: fadeIn 1s both;
+                }
+
+                p:nth-of-type(3) {
+                    opacity: 0;
+                }
+            }
+        }
+        &.forth-fx,
+        &.reverse {
+            p:nth-of-type(1),
+            p:nth-of-type(2) {
+                animation: scaleDown 1s both;
+                -webkit-animation: scaleDown 1s both;
+            }
+
+            p:nth-of-type(3) {
+                opacity: 0;
+                animation: fadeIn 1s both;
+                -webkit-animation: fadeIn 1s both;
+            }
+        }
+    }
+
+    &#history {
+        > div.content-wrapper {
+            > p {
+                font-size: 1.15rem;
+                text-align: center;
+                padding: 0 5vw;
+            }
+
+            > ul {
+                * {
+                    font-size: 1.3rem;
+                }
+
+                &:nth-of-type(2) {
+                    text-align: right;
+                }
+            }
+        }
+
+        // funky-fx
+        &:not(.reverse) {
+            &.first-fx {
+                p,
+                ul {
+                    opacity: 0;
+                }
+            }
+
+            &.second-fx {
+                p {
+                    animation: fadeIn 1s both;
+                    -webkit-animation: fadeIn 1s both;
+                }
+                ul {
+                    opacity: 0;
+                }
+            }
+        }
+        &.reverse,
+        &.third-fx {
+            ul {
+                opacity: 1;
+
+                &:nth-of-type(1) > li {
+                    animation: fadeInLeft 1s both;
+                    -webkit-animation: fadeInLeft 1s both;
+
+                    &:nth-of-type(1) {
+                        animation-delay: calc(0 * var(--history-animation-delay-base) * 1s);
+                        -webkit-animation-delay: calc(0 * var(--history-animation-delay-base) * 1s);
+                    }
+                    &:nth-of-type(2) {
+                        animation-delay: calc(1 * var(--history-animation-delay-base) * 1s);
+                        -webkit-animation-delay: calc(1 * var(--history-animation-delay-base) * 1s);
+                    }
+                    &:nth-of-type(3) {
+                        animation-delay: calc(2 * var(--history-animation-delay-base) * 1s);
+                        -webkit-animation-delay: calc(2 * var(--history-animation-delay-base) * 1s);
+                    }
+                    &:nth-of-type(4) {
+                        animation-delay: calc(3 * var(--history-animation-delay-base) * 1s);
+                        -webkit-animation-delay: calc(3 * var(--history-animation-delay-base) * 1s);
+                    }
+                    &:nth-of-type(5) {
+                        animation-delay: calc(4 * var(--history-animation-delay-base) * 1s);
+                        -webkit-animation-delay: calc(4 * var(--history-animation-delay-base) * 1s);
+                    }
+                }
+
+                &:nth-of-type(2) > li {
+                    animation: fadeInRight 1s both;
+                    -webkit-animation: fadeInRight 1s both;
+
+                    &:nth-of-type(1) {
+                        animation-delay: calc(6 * var(--history-animation-delay-base) * 1s);
+                        -webkit-animation-delay: calc(6 * var(--history-animation-delay-base) * 1s);
+                    }
+                    &:nth-of-type(2) {
+                        animation-delay: calc(7 * var(--history-animation-delay-base) * 1s);
+                        -webkit-animation-delay: calc(7 * var(--history-animation-delay-base) * 1s);
+                    }
+                    &:nth-of-type(3) {
+                        animation-delay: calc(8 * var(--history-animation-delay-base) * 1s);
+                        -webkit-animation-delay: calc(8 * var(--history-animation-delay-base) * 1s);
+                    }
+                    &:nth-of-type(4) {
+                        animation-delay: calc(9 * var(--history-animation-delay-base) * 1s);
+                        -webkit-animation-delay: calc(9 * var(--history-animation-delay-base) * 1s);
+                    }
+                }
+            }
+        }
+    }
+
+    &#embeds {
+        background-image: url("assets/img/waves.webp");
+        background-size: cover;
+
+        > div.content-wrapper {
+            align-items: center;
+            flex-direction: row;
+            // 100vw - padding - iframes margins (aproximation, not pixel perfect)
+            width: calc(100vw - 20vw - (2 * 3 * 0.2rem));
+
+            > iframe {
+                background: black;
+                height: 70vh;
+                width: calc(70vh * 9 / 16);
+                border-radius: 15px;
+                border: solid 0.5rem black;
+                margin: 0 0.2rem;
+
+                &:nth-of-type(2) {
+                    background: red;
+                    border-color: red;
+                }
+
+                &:nth-of-type(3) {
+                    background: blue;
+                    border-color: blue;
+                }
+            }
+        }
+
+        // funky-fx
+        &:not(.reverse) {
+            &.first-fx {
+                iframe {
+                    opacity: 0;
+                }
+            }
+        }
+        &.second-fx,
+        &.third-fx,
+        &.reverse {
+            iframe {
+                animation: fadeIn 1s both;
+                -webkit-animation: fadeIn 1s both;
+            }
+        }
     }
 }
 
-div.blackbar {
-    height: var(--blackbar-content);
-    background-image: url("assets/swell-afrika.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    margin: calc(var(--blackbar-margin) / 2) 0;
+@media screen and (max-aspect-ratio: 1.35) {
+    section#landing {
+        div#desktop-animation {
+            display: none;
+        }
+    }
+
+    section#embeds {
+        iframe:not(:first-of-type) {
+            display: none;
+        }
+    }
 }
 
-// debug
-.red {
-    color: red;
-}
-
-.blue {
-    color: blue;
-}
-
-.green {
-    color: green;
-}
-
-.fade-in {
-    animation: fadeIn 1s forwards;
-}
-
-.scale-up {
-    animation: scaleUp 1s forwards;
-}
-.scale-down {
-    animation: scaleDown .75s forwards;
+@media screen and (min-aspect-ratio: 1.35) {
+    section#landing {
+        div#mobile-animation {
+            display: none;
+        }
+    }
 }

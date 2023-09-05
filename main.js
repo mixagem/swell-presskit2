@@ -1,15 +1,56 @@
 const funkyElements = {
-    'section#origins>div>p:first-of-type': {
+    'section#origins': {
+        // (aka distance from bottom)
+        viewports: [
+            [0, 40],
+            [40, 85],
+            [85, 100]
+        ],
+        classes: [
+            { classesToAdd: ['first-fx'], removeAll: true },
+            { classesToAdd: ['second-fx'], removeAll: true },
+            { classesToAdd: ['third-fx'], removeAll: true }
+        ]
+    },
+    'section#debuts': {
         // (aka distance from bottom)
         viewports: [
             [0, 30],
-            [30, 55],
-            [55, 100]
+            [30, 60],
+            [60, 90],
+            [90, 100]
         ],
         classes: [
-            { classesToAdd: ['invisible'], removeAll: true },
-            { classesToAdd: ['fade-in'], removeAll: true },
-            { classesToAdd: ['scale-down'], removeAll: true }
+            { classesToAdd: ['first-fx'], removeAll: true },
+            { classesToAdd: ['second-fx'], removeAll: true },
+            { classesToAdd: ['third-fx'], removeAll: true },
+            { classesToAdd: ['forth-fx'], removeAll: true }
+        ]
+    },
+    'section#history': {
+        // (aka distance from bottom)
+        viewports: [
+            [0, 35],
+            [35, 70],
+            [70, 100]
+        ],
+        classes: [
+            { classesToAdd: ['first-fx'], removeAll: true },
+            { classesToAdd: ['second-fx'], removeAll: true },
+            { classesToAdd: ['third-fx'], removeAll: true }
+        ]
+    },
+    'section#embeds': {
+        // (aka distance from bottom)
+        viewports: [
+            [0, 50],
+            [50, 75],
+            [75, 100]
+        ],
+        classes: [
+            { classesToAdd: ['first-fx'], removeAll: true },
+            { classesToAdd: ['second-fx'], removeAll: true },
+            { classesToAdd: ['third-fx'], removeAll: true }
         ]
     }
 }
@@ -55,7 +96,7 @@ function funkMyElements() {
         const elementVisibilityInfo = getElementVisibilityInfo(element)
 
         // element not in need of funk
-        if (!elementVisibilityInfo.animationRange || elementVisibilityInfo.position === 'bottom') { return }
+        if (!elementVisibilityInfo.animationRange) { return }
 
         const funkyStyles = funkyElements[element];
         const DOMElement = document.querySelector(element);
@@ -75,6 +116,8 @@ function funkMyElements() {
                     DOMElement.classList.add(cssClass)
 
                 });
+
+                DOMElement.classList.toggle('reverse', elementVisibilityInfo.position === 'bottom')
             }
         }
     });
