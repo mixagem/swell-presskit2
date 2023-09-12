@@ -14,8 +14,8 @@
   font-display: swap;
 }
 :root {
-  --blackbar-content: 140px;
-  --blackbar-margin: 40px;
+  --blackbar-content: 14vh;
+  --blackbar-margin: 4vh;
   --section-with-blackbar: calc(var(--blackbar-content) + var(--blackbar-margin) + 100vh);
   --history-animation-delay-base: 0.15;
 }
@@ -61,11 +61,14 @@ section {
 }
 section + div.blackbar {
   height: var(--blackbar-content);
+  background-color: rgb(0, 0, 0);
   background-image: url("assets/img/swell-afrika.png");
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  margin: calc(var(--blackbar-margin) / 2) 0;
+  background-origin: content-box;
+  padding: calc(var(--blackbar-margin) / 2) 0;
+  position: relative;
 }
 section > div.video-bg {
   position: sticky;
@@ -106,13 +109,13 @@ section#landing > div.content-wrapper {
   top: 0;
 }
 section#origins > div.content-wrapper {
-  top: var(--section-with-blackbar);
+  top: 0;
 }
 section#debuts > div.content-wrapper {
-  top: calc(2 * var(--section-with-blackbar));
+  top: calc(1 * var(--section-with-blackbar));
 }
 section#history > div.content-wrapper {
-  top: calc(3 * var(--section-with-blackbar));
+  top: calc(2 * var(--section-with-blackbar));
 }
 section#embeds > div.content-wrapper {
   top: calc(4 * var(--section-with-blackbar));
@@ -402,16 +405,62 @@ section#embeds.second-fx iframe, section#embeds.third-fx iframe, section#embeds.
   -webkit-animation: fadeIn 1s both;
 }
 
+#content-video-bg {
+  height: calc(3 * var(--section-with-blackbar));
+  width: 100vw;
+  position: relative;
+}
+#content-video-bg video {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  -o-object-fit: cover;
+     object-fit: cover;
+  z-index: 0;
+}
+
 @media screen and (max-aspect-ratio: 1.35) {
   section#landing div#desktop-animation {
     display: none;
   }
-  section#embeds iframe:not(:first-of-type) {
+  section#embeds > div.content-wrapper {
+    flex-direction: column;
+  }
+  section#embeds > div.content-wrapper > iframe:not(.toggled-iframe) {
     display: none;
+  }
+  section#embeds > div.content-wrapper > div#embed-controls {
+    display: flex;
+  }
+  section#embeds > div.content-wrapper > div#embed-controls > span {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    margin: 0 1rem;
+  }
+  section#embeds > div.content-wrapper > div#embed-controls > span > span {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    pointer-events: none;
+  }
+  section#embeds > div.content-wrapper > div#embed-controls > span.selected-iframe, section#embeds > div.content-wrapper > div#embed-controls > span:hover {
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    border-color: rgb(0, 144, 160);
+    background-color: rgba(97, 68, 51, 0.6);
   }
 }
 @media screen and (min-aspect-ratio: 1.35) {
   section#landing div#mobile-animation {
+    display: none;
+  }
+  section#embeds > div.content-wrapper > div#embed-controls {
     display: none;
   }
 }/*# sourceMappingURL=styles.css.map */

@@ -19,8 +19,8 @@
 }
 
 :root {
-    --blackbar-content: 140px;
-    --blackbar-margin: 40px;
+    --blackbar-content: 14vh;
+    --blackbar-margin: 4vh;
     --section-with-blackbar: calc(var(--blackbar-content) + var(--blackbar-margin) + 100vh);
     --history-animation-delay-base: 0.15;
 }
@@ -67,11 +67,14 @@ section {
     // blackbars
     + div.blackbar {
         height: var(--blackbar-content);
+        background-color: rgba(0, 0, 0, 1.2);
         background-image: url("assets/img/swell-afrika.png");
         background-repeat: no-repeat;
         background-size: contain;
         background-position: center;
-        margin: calc(var(--blackbar-margin) / 2) 0;
+        background-origin: content-box;
+        padding: calc(var(--blackbar-margin) / 2) 0;
+        position: relative;
     }
 
     // video-backgrounds
@@ -120,13 +123,13 @@ section {
         top: 0;
     }
     &#origins > div.content-wrapper {
-        top: var(--section-with-blackbar);
+        top: 0;
     }
     &#debuts > div.content-wrapper {
-        top: calc(2 * var(--section-with-blackbar));
+        top: calc(1 * var(--section-with-blackbar));
     }
     &#history > div.content-wrapper {
-        top: calc(3 * var(--section-with-blackbar));
+        top: calc(2 * var(--section-with-blackbar));
     }
     &#embeds > div.content-wrapper {
         top: calc(4 * var(--section-with-blackbar));
@@ -515,6 +518,19 @@ section {
     }
 }
 
+#content-video-bg {
+    height: calc(3 * var(--section-with-blackbar));
+    width: 100vw;
+    position: relative;
+    video {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        object-fit: cover;
+        z-index: 0;
+    }
+}
+
 @media screen and (max-aspect-ratio: 1.35) {
     section#landing {
         div#desktop-animation {
@@ -523,8 +539,40 @@ section {
     }
 
     section#embeds {
-        iframe:not(:first-of-type) {
-            display: none;
+        > div.content-wrapper {
+            flex-direction: column;
+
+            > iframe:not(.toggled-iframe) {
+                display: none;
+            }
+            > div#embed-controls {
+                display: flex;
+                > span {
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 40px;
+                    height: 40px;
+                    border: 2px solid rgba(255, 255, 255, 0.5);
+                    transform: rotate(45deg);
+                    -webkit-transform: rotate(45deg);
+                    margin: 0 1rem;
+                    > span {
+                        transform: rotate(-45deg);
+                        -webkit-transform: rotate(-45deg);
+                        pointer-events: none;
+                    }
+
+                    &.selected-iframe,
+                    &:hover {
+                        transition: all 0.3s ease;
+                        -webkit-transition: all 0.3s ease;
+                        border-color: rgba(0, 144, 160);
+                        background-color: rgba(97, 68, 51, 0.6);
+                    }
+                }
+            }
         }
     }
 }
@@ -532,6 +580,12 @@ section {
 @media screen and (min-aspect-ratio: 1.35) {
     section#landing {
         div#mobile-animation {
+            display: none;
+        }
+    }
+
+    section#embeds {
+        > div.content-wrapper > div#embed-controls {
             display: none;
         }
     }

@@ -15,10 +15,10 @@ const funkyElements = {
     'section#debuts': {
         // (aka distance from bottom)
         viewports: [
-            [0, 30],
-            [30, 60],
-            [60, 90],
-            [90, 100]
+            [0, 33],
+            [33, 66],
+            [66, 99],
+            [99, 100]
         ],
         classes: [
             { classesToAdd: ['first-fx'], removeAll: true },
@@ -59,6 +59,26 @@ onscroll = (event) => {
     funkMyElements()
 }
 
+document.querySelectorAll('section#embeds > div.content-wrapper > div#embed-controls > span').forEach(element => {
+    element.addEventListener('click', event => {
+        embedControlsClassSwap(Number(event.target.attributes.name.value))
+    })
+});
+
+function embedControlsClassSwap(targetIndex) {
+    document.querySelectorAll('section#embeds > div.content-wrapper > div#embed-controls > span').forEach(element => {
+        element.classList = '';
+    });
+
+    document.querySelector(`section#embeds > div.content-wrapper > div#embed-controls > span:nth-of-type(${targetIndex})`).classList.add('selected-iframe')
+
+
+    document.querySelectorAll('section#embeds > div.content-wrapper > iframe').forEach(element => {
+        element.classList = '';
+    });
+    document.querySelector(`section#embeds > div.content-wrapper > iframe:nth-of-type(${targetIndex})`).classList.add('toggled-iframe')
+
+}
 
 function getElementVisibilityInfo(element) {
 
