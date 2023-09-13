@@ -60,30 +60,73 @@ a {
     opacity: 0 !important;
 }
 
+// blackbars
+div.blackbar {
+    height: var(--blackbar-content);
+    background-color: rgba(0, 0, 0, 0.4);
+    background-image: url("assets/img/swell-afrika.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-origin: content-box;
+    padding: calc(var(--blackbar-margin) / 2) 0;
+    position: relative;
+    width: 100vw;
+    &.alternative {
+        background-image: url("assets/img/swell-afrika-alt.png");
+    }
+}
+
+#content-with-bg-video {
+    height: calc(3 * var(--section-with-blackbar));
+
+    .blackbar:nth-last-of-type(1) {
+        top: 200vh;
+    }
+
+    .blackbar:nth-last-of-type(2) {
+        top: 100vh;
+    }
+
+    .blackbar:last-of-type {
+        background-position-y: 9vh;
+    }
+
+    .sticky-video {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        width: 100vw;
+        z-index: -1;
+
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-height: 100%;
+            min-width: 100%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+    }
+}
+
 section {
+    width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.4);
 
-    // blackbars
-    + div.blackbar {
-        height: var(--blackbar-content);
-        background-color: rgba(0, 0, 0, 1.2);
-        background-image: url("assets/img/swell-afrika.png");
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center;
-        background-origin: content-box;
-        padding: calc(var(--blackbar-margin) / 2) 0;
-        position: relative;
+    &:not(#landing) {
+        position: absolute;
     }
-
     // video-backgrounds
     > div.video-bg {
-        position: sticky;
+        position: absolute;
         width: 100%;
         height: 100%;
         overflow: hidden;
-        z-index: -9;
+        top: 0;
+        left: 0;
+        background: black;
 
         video {
             position: absolute;
@@ -122,17 +165,17 @@ section {
     &#landing > div.content-wrapper {
         top: 0;
     }
-    &#origins > div.content-wrapper {
-        top: 0;
+    &#origins {
+        top: 100vh;
     }
-    &#debuts > div.content-wrapper {
-        top: calc(1 * var(--section-with-blackbar));
+    &#debuts {
+        top: calc(100vh + 1 * var(--section-with-blackbar));
     }
-    &#history > div.content-wrapper {
-        top: calc(2 * var(--section-with-blackbar));
+    &#history {
+        top: calc(100vh + 2 * var(--section-with-blackbar));
     }
-    &#embeds > div.content-wrapper {
-        top: calc(4 * var(--section-with-blackbar));
+    &#embeds {
+        top: calc(100vh + 3 * var(--section-with-blackbar));
     }
 
     // landing section
@@ -152,7 +195,7 @@ section {
             -webkit-animation: fadeIn 1s both;
             animation-delay: 1s;
             -webkit-animation-delay: 1s;
-            z-index: 2;
+            z-index: 1;
             padding: 1.5rem;
 
             > a > i {
@@ -208,10 +251,6 @@ section {
                     opacity: 0;
                     width: 22px;
                     height: 25px;
-                    // background-image: url("assets/img/cursor.png");
-                    // background-size: contain;
-                    // background-repeat: no-repeat;
-                    // background-position: center;
                     position: relative;
                     top: 50px;
                     left: 20px;
@@ -485,8 +524,16 @@ section {
         > div.content-wrapper {
             align-items: center;
             flex-direction: row;
-            // 100vw - padding - iframes margins (aproximation, not pixel perfect)
-            width: calc(100vw - 20vw - (2 * 3 * 0.2rem));
+            width: calc(100vw - 20vw);
+
+            > div.blackbar {
+                background-color: transparent;
+                position: absolute;
+                top: 0;
+                width: 100%;
+                z-index: 01;
+                background-position-y: -9vh;
+            }
 
             > iframe {
                 // background: black;
@@ -494,7 +541,7 @@ section {
                 width: calc(70vh * 9 / 16);
                 border-radius: 15px;
                 border: solid 0.5rem black;
-                margin: 0 0.2rem;
+                margin: 5vh 0.2rem 0;
                 border-color: rgba(97, 68, 51, 0.6) rgba(97, 68, 51, 0.6) rgba(0, 144, 160, 0.4) rgba(0, 144, 160, 0.4);
             }
         }
@@ -515,19 +562,6 @@ section {
                 -webkit-animation: fadeIn 1s both;
             }
         }
-    }
-}
-
-#content-video-bg {
-    height: calc(3 * var(--section-with-blackbar));
-    width: 100vw;
-    position: relative;
-    video {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        object-fit: cover;
-        z-index: 0;
     }
 }
 
@@ -570,6 +604,11 @@ section {
                         -webkit-transition: all 0.3s ease;
                         border-color: rgba(0, 144, 160);
                         background-color: rgba(97, 68, 51, 0.6);
+                        > span {
+                            transition: all 0.3s ease;
+                            -webkit-transition: all 0.3s ease;
+                            font-size: 3rem;
+                        }
                     }
                 }
             }
